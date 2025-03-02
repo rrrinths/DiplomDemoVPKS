@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/imagebackdiplom">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/jost_light"
+        android:text="@string/text1"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/jost_light"
+        android:text="Аккаунт"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_below="@id/text1"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text2"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/default_user" />
+
+    <TextView
+        android:id="@+id/changePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сменить фото"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/profileImage"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Имя"
+        android:background="@drawable/edit_text_bg"
+        android:textColor="@android:color/black"
+        android:padding="12dp"
+        android:layout_below="@id/changePhoto"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp" />
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/editName"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/edit_text_bg"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Сохранить"
+        android:backgroundTint="#8B6F50"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:layout_below="@id/emailText"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/jost_light"/>
+
+    <!-- Кнопка для перехода в Избранное -->
+    <Button
+        android:id="@+id/btnFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Избранное"
+        android:backgroundTint="#8B6F50"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:layout_below="@id/btnSave"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/jost_light"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#85705D"
+        app:itemIconTint="@color/bottom_nav_default_color"
+        app:itemTextColor="@color/bottom_nav_default_color"
+        app:menu="@menu/bottom_navigation" />
+
+</RelativeLayout>

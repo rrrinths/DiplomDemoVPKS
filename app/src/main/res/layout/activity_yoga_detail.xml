@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="1dp"
+    android:background="@drawable/imagebackdiplom">
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="371dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/jost_light"
+        android:text="@string/text1"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="371dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+
+        android:fontFamily="@font/jost_light"
+        android:text="Йога"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:id="@+id/yogaContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+            <ImageView
+                android:id="@+id/yogaImageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+            <TextView
+                android:id="@+id/yogaTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:padding="16dp"
+                android:text="Здесь будет текст йоги"
+                android:gravity="center"/>
+        </LinearLayout>
+    </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#85705D"
+        app:itemIconTint="@color/bottom_nav_default_color"
+        app:itemTextColor="@color/bottom_nav_default_color"
+        app:menu="@menu/bottom_navigation"/>
+</LinearLayout>

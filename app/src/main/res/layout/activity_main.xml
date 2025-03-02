@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/diplomback">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="190dp"
+        android:fontFamily="@font/jost_light"
+        android:text="@string/text1"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/jost_light"
+        android:text="@string/text2"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="23sp"
+        android:layout_below="@id/text1"
+    android:layout_centerHorizontal="true" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/jost"
+        android:text="@string/buttontext"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+</RelativeLayout>

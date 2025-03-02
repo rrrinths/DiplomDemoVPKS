@@ -1,0 +1,131 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/imagebackdiplom"
+    tools:context=".HomeActivity">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="371dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/jost_light"
+        android:text="@string/text1"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/tvGreeting"
+        android:layout_width="372dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/jost_light"
+        android:padding="16dp"
+        android:text="Доброе время суток!"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="38dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image_11" />
+
+                <TextView
+                    android:id="@+id/Yoga"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Йога 'Начало'"
+                    android:fontFamily="@font/jost_light"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/image_18"
+                    android:scaleType="centerCrop"
+                    android:layout_marginEnd="38dp"/>
+
+                <TextView
+                    android:id="@+id/Meditation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Метта-медитация"
+                    android:fontFamily="@font/jost_light"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="350dp"
+                    android:layout_height="125dp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/image_22" />
+
+                <TextView
+                    android:id="@+id/tvMotivation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Мотивация"
+                    android:fontFamily="@font/jost_light"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#85705D"
+        app:itemIconTint="@color/bottom_nav_default_color"
+        app:itemTextColor="@color/bottom_nav_default_color"
+        app:menu="@menu/bottom_navigation"/>
+
+</LinearLayout>

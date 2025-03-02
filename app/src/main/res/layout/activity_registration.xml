@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationActivity"
+    android:background="@drawable/imagebackdiplom">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/jost_light"
+        android:text="@string/text1"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/jost_light"
+        android:text="Регистрация"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_below="@id/text1"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/nav_home"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/icons8__30"
+        android:backgroundTint="@color/white"
+        android:contentDescription="Back" />
+    <!-- Поля ввода -->
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Имя"
+        android:padding="15dp"
+        android:background="@drawable/edit_text_bg"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text2"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/jost_light"/>
+
+    <EditText
+        android:id="@+id/editPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Телефон"
+        android:padding="15dp"
+        android:background="@drawable/edit_text_bg"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/editName"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/jost_light"/>
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:padding="15dp"
+        android:background="@drawable/edit_text_bg"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/editPhone"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/jost_light"/>
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Пароль"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:background="@drawable/edit_text_bg"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/editEmail"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/jost_light"/>
+
+    <!-- Политика конфиденциальности -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Продолжая, вы соглашаетесь с нашими\nУсловиями обслуживания и Политикой конфиденциальности."
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_below="@id/editPassword"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/jost_light"/>
+
+    <!-- Кнопка регистрации -->
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Зарегистрироваться"
+        android:backgroundTint="#8B6F50"
+        android:textColor="@android:color/white"
+        android:padding="15dp"
+        android:layout_below="@id/editPassword"
+        android:layout_marginTop="95dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/jost_light"/>
+
+    <!-- Уже есть аккаунт? -->
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Уже есть аккаунт?"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/btnRegister"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/jost_light"/>
+</RelativeLayout>

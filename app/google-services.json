@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "168863274566",
+    "firebase_url": "https://self-care-c9b33-default-rtdb.firebaseio.com",
+    "project_id": "self-care-c9b33",
+    "storage_bucket": "self-care-c9b33.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168863274566:android:b3af7821c15b9f07485c47",
+        "android_client_info": {
+          "package_name": "com.example.diplomdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168863274566-34vo8nsqrffg6fkqtlsc5hu1844qhiq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd6flc6jAEsexgHbQ99FZpCrf-9no1vOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168863274566-34vo8nsqrffg6fkqtlsc5hu1844qhiq1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
