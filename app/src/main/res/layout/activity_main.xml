@@ -5,21 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/diplomback">
+    android:background="@drawable/main"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/text1"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="190dp"
-        android:fontFamily="@font/jost_light"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/jost"
         android:text="@string/text1"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/card_background"/>
 
     <TextView
         android:id="@+id/text2"
@@ -33,20 +34,165 @@
         android:textColor="@color/white"
         android:textSize="23sp"
         android:layout_below="@id/text1"
-    android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/card_background"/>
+
+    <HorizontalScrollView
+        android:id="@+id/benefitsScroll"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        android:scrollbars="none"
+        android:layout_below="@id/text2"
+        android:background="@drawable/card_background">
+
+        <LinearLayout
+            android:id="@+id/benefitsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="410dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/jost"
+                    android:text="Снижение стресса"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/jost_light"
+                    android:maxWidth="250dp"
+                    android:text="Регулярная практика йоги снижает уровень кортизола"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="410dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/jost"
+                    android:text="Гибкость тела"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/jost_light"
+                    android:maxWidth="250dp"
+                    android:text="Улучшение подвижности суставов и эластичности мышц"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="410dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Улучшение сна"
+                    android:fontFamily="@font/jost"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Медитация помогает быстрее засыпать и лучше высыпаться"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"
+                    android:fontFamily="@font/jost_light"
+                    android:maxWidth="250dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/dotsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/benefitsScroll"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/dot_active"/>
+
+        <View
+            android:id="@+id/dot2"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/dot_inactive"/>
+
+        <View
+            android:id="@+id/dot3"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/dot_inactive"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dotsContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Начни практиковать прямо сейчас"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:fontFamily="@font/jost_light"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text2"
+        android:layout_below="@id/welcomeText"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="35dp"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/jost"
         android:text="@string/buttontext"
         android:textColor="@color/black"
         android:textSize="18sp" />
-
 </RelativeLayout>

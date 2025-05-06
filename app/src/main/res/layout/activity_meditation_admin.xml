@@ -1,0 +1,173 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/imagebackdiplom"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/titleMeditations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Медитации"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:fontFamily="@font/jost_light"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:id="@+id/nav_home"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/icons8__30"
+        android:backgroundTint="@color/white"
+        android:contentDescription="Back" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/meditationRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleMeditations"
+        android:layout_marginTop="16dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:clipToPadding="false"
+        android:fontFamily="@font/jost_light"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/meditationRecyclerView"
+        android:layout_above="@id/buttonPanel"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editTextCategoryId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID категории"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Описание медитации"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <EditText
+                android:id="@+id/editTextId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID медитации"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <EditText
+                android:id="@+id/editTextImageUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="URL или имя изображения"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <EditText
+                android:id="@+id/editTextMeditationText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Текст медитации"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Название медитации"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить"
+            android:backgroundTint="#8B6F50"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/jost_light"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Изменить"
+            android:backgroundTint="#8B6F50"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/jost_light"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Удалить"
+            android:backgroundTint="#8B6F50"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/jost_light" />
+    </LinearLayout>
+</RelativeLayout>

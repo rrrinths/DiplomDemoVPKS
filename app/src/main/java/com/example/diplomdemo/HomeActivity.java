@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,17 +34,23 @@ public class HomeActivity extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
-            DocumentReference userRef = db.collection("User").document(userId);
+            DatabaseReference userRef = com.google.firebase.database.FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(userId);
 
-            userRef.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    String userName = documentSnapshot.getString("name");
+            userRef.get().addOnSuccessListener(dataSnapshot -> {
+                if (dataSnapshot.exists()) {
+                    String userName = dataSnapshot.child("name").getValue(String.class);
                     if (userName == null || userName.isEmpty()) {
                         userName = "Пользователь";
                     }
                     tvGreeting.setText("Доброе время суток, " + userName + "!");
+                } else {
+                    tvGreeting.setText("Доброе время суток!");
                 }
-            }).addOnFailureListener(e -> tvGreeting.setText("Доброе время суток!"));
+            }).addOnFailureListener(e -> {
+                tvGreeting.setText("Доброе время суток!");
+            });
         } else {
             tvGreeting.setText("Доброе время суток!");
         }

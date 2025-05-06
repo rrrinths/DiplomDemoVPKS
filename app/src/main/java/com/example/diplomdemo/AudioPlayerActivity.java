@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +26,12 @@ public class AudioPlayerActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private SeekBar seekBar;
     private ImageButton playPauseButton, favoriteButton;
-    private TextView currentTime, totalTime;
+    private TextView currentTime, totalTime, audioTitleView;
+    private ImageView audioCoverView;
     private Handler handler = new Handler();
     private boolean isFavorite = false;
     private String contentId;
+    private int lastPlaybackPosition = 0;
 
     private FirebaseAuth auth;
     private DatabaseReference favoritesRef;
@@ -39,91 +41,44 @@ public class AudioPlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_player);
+        initViews();
+        getIntentData();
+        initializeMediaPlayer();
+        setupBottomNavigation();
+        checkAuth();
+        checkIfFavorite();
+        setupEventListeners();
+    }
 
+    private void initViews() {
         playPauseButton = findViewById(R.id.playPauseButton);
         favoriteButton = findViewById(R.id.favoriteButton);
         seekBar = findViewById(R.id.seekBar);
         currentTime = findViewById(R.id.currentTime);
         totalTime = findViewById(R.id.totalTime);
+        audioTitleView = findViewById(R.id.audioTitle);
+        audioCoverView = findViewById(R.id.audioCover);
+    }
 
-        // Настройка нижнего бара
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        if (bottomNavigationView != null) {
-            bottomNavigationView.setOnItemSelectedListener(item -> {
-                if (item.getItemId() == R.id.nav_home) {
-                    startActivity(new Intent(this, HomeActivity.class));
-                    return true;
-                } else if (item.getItemId() == R.id.nav_category) {
-                    startActivity(new Intent(this, CategoryActivity.class));
-                    return true;
-                } else if (item.getItemId() == R.id.nav_profile) {
-                    startActivity(new Intent(this, AccountActivity.class));
-                    return true;
-                }
-                return false;
-            });
-        }
+    private void getIntentData() {
+        Intent intent = getIntent();
+        contentId = intent.getStringExtra("AUDIO_FILE");
+        String title = intent.getStringExtra("AUDIO_TITLE");
+        String image = intent.getStringExtra("AUDIO_IMAGE");
 
-        auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-
-        if (user == null) {
-            Toast.makeText(this, "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
-        userId = user.getUid();
-        favoritesRef = FirebaseDatabase.getInstance().getReference("Favorites");
-
-        contentId = getIntent().getStringExtra("AUDIO_FILE");
-        if (contentId == null) {
+        if (contentId == null || title == null || image == null) {
             Toast.makeText(this, "Ошибка загрузки контента", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        initializeMediaPlayer();
 
-        checkIfFavorite();
-
-        playPauseButton.setOnClickListener(v -> {
-            if (mediaPlayer == null) {
-                initializeMediaPlayer();
-            }
-
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-                playPauseButton.setImageResource(R.drawable.ic_play);
-            } else {
-                mediaPlayer.start();
-                playPauseButton.setImageResource(R.drawable.ic_pause);
-                updateSeekBar();
-            }
-        });
-
-        favoriteButton.setOnClickListener(v -> toggleFavorite());
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) mediaPlayer.seekTo(progress);
-                currentTime.setText(formatTime(mediaPlayer.getCurrentPosition()));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
+        audioTitleView.setText(title);
+        int imageResId = getResources().getIdentifier(image, "drawable", getPackageName());
+        audioCoverView.setImageResource(imageResId != 0 ? imageResId : R.drawable.sample_audio_image);
     }
 
     private void initializeMediaPlayer() {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-
-        int resId = getAudioResId(contentId);
+        int resId = getResources().getIdentifier(contentId, "raw", getPackageName());
         if (resId == 0) {
             Toast.makeText(this, "Аудиофайл не найден", Toast.LENGTH_SHORT).show();
             return;
@@ -138,21 +93,67 @@ public class AudioPlayerActivity extends AppCompatActivity {
         mediaPlayer.setOnCompletionListener(mp -> {
             playPauseButton.setImageResource(R.drawable.ic_play);
             seekBar.setProgress(0);
+            currentTime.setText("0:00");
         });
     }
 
-    private int getAudioResId(String audioFileName) {
-        return getResources().getIdentifier(audioFileName, "raw", getPackageName());
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        if (bottomNav != null) {
+            bottomNav.setOnItemSelectedListener(item -> {
+                releaseMediaPlayer();
+                int itemId = item.getItemId();
+                if (itemId == R.id.nav_home) {
+                    startActivity(new Intent(this, HomeActivity.class));
+                } else if (itemId == R.id.nav_category) {
+                    startActivity(new Intent(this, CategoryActivity.class));
+                } else if (itemId == R.id.nav_profile) {
+                    startActivity(new Intent(this, AccountActivity.class));
+                }
+                finish();
+                return true;
+            });
+        }
     }
 
-    private void playPauseAudio() {
-        if (mediaPlayer == null) {
-            initializeMediaPlayer();
+    private void checkAuth() {
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        if (user == null) {
+            Toast.makeText(this, "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
+        userId = user.getUid();
+        favoritesRef = FirebaseDatabase.getInstance().getReference("Favorites");
+    }
+
+    private void setupEventListeners() {
+        playPauseButton.setOnClickListener(v -> togglePlayPause());
+
+        favoriteButton.setOnClickListener(v -> toggleFavorite());
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser && mediaPlayer != null) {
+                    mediaPlayer.seekTo(progress);
+                    currentTime.setText(formatTime(progress));
+                }
+            }
+
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+    }
+
+    private void togglePlayPause() {
+        if (mediaPlayer == null) return;
 
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             playPauseButton.setImageResource(R.drawable.ic_play);
+            handler.removeCallbacksAndMessages(null);
         } else {
             mediaPlayer.start();
             playPauseButton.setImageResource(R.drawable.ic_pause);
@@ -160,29 +161,37 @@ public class AudioPlayerActivity extends AppCompatActivity {
         }
     }
 
+    private void updateSeekBar() {
+        if (mediaPlayer == null || !mediaPlayer.isPlaying()) return;
+
+        seekBar.setProgress(mediaPlayer.getCurrentPosition());
+        currentTime.setText(formatTime(mediaPlayer.getCurrentPosition()));
+        handler.postDelayed(this::updateSeekBar, 1000);
+    }
 
     private void checkIfFavorite() {
-        favoritesRef.orderByChild("userId").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot favSnapshot : snapshot.getChildren()) {
-                    String favContentId = favSnapshot.child("contentId").getValue(String.class);
-                    if (favContentId != null && favContentId.equals(contentId)) {
-                        favSnapshot.getRef().removeValue()
-                                .addOnSuccessListener(aVoid -> {
-                                    isFavorite = false;
-                                    favoriteButton.setImageResource(R.drawable.ic_favorite_outline);
-                                    Toast.makeText(AudioPlayerActivity.this, "Удалено из избранного", Toast.LENGTH_SHORT).show();
-                                });
+        favoritesRef.orderByChild("userId").equalTo(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        isFavorite = false;
+                        for (DataSnapshot favSnapshot : snapshot.getChildren()) {
+                            String favContentId = favSnapshot.child("contentId").getValue(String.class);
+                            if (contentId.equals(favContentId)) {
+                                isFavorite = true;
+                                break;
+                            }
+                        }
+                        updateFavoriteIcon();
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AudioPlayerActivity.this, "Ошибка удаления", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(AudioPlayerActivity.this,
+                                "Ошибка проверки избранного",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void toggleFavorite() {
@@ -198,48 +207,54 @@ public class AudioPlayerActivity extends AppCompatActivity {
         if (favoriteId == null) return;
 
         favoritesRef.child(favoriteId).setValue(new Favorite(userId, contentId))
-                .addOnSuccessListener(aVoid -> {
-                    isFavorite = true;
-                    favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
-                    Toast.makeText(AudioPlayerActivity.this, "Добавлено в избранное", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> Toast.makeText(AudioPlayerActivity.this, "Ошибка добавления", Toast.LENGTH_SHORT).show());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        isFavorite = true;
+                        updateFavoriteIcon();
+                        Toast.makeText(this, "Добавлено в избранное", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Ошибка добавления", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void removeFromFavorites() {
-        favoritesRef.orderByChild("userId").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot favSnapshot : snapshot.getChildren()) {
-                    String favContentId = favSnapshot.child("contentId").getValue(String.class);
-                    if (favContentId != null && favContentId.equals(contentId)) {
-                        favSnapshot.getRef().removeValue().addOnSuccessListener(aVoid -> {
-                            isFavorite = false;
-                            favoriteButton.setImageResource(R.drawable.ic_favorite_outline);
-                            Toast.makeText(AudioPlayerActivity.this, "Удалено из избранного", Toast.LENGTH_SHORT).show();
-                        });
-                        return;
+        favoritesRef.orderByChild("userId").equalTo(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot favSnapshot : snapshot.getChildren()) {
+                            String favContentId = favSnapshot.child("contentId").getValue(String.class);
+                            if (contentId.equals(favContentId)) {
+                                favSnapshot.getRef().removeValue()
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                isFavorite = false;
+                                                updateFavoriteIcon();
+                                                Toast.makeText(AudioPlayerActivity.this,
+                                                        "Удалено из избранного",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                return;
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AudioPlayerActivity.this, "Ошибка удаления", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(AudioPlayerActivity.this,
+                                "Ошибка удаления",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
-    private void updateSeekBar() {
-        if (mediaPlayer == null || !mediaPlayer.isPlaying()) return;
-
-        handler.postDelayed(() -> {
-            seekBar.setProgress(mediaPlayer.getCurrentPosition());
-            currentTime.setText(formatTime(mediaPlayer.getCurrentPosition()));
-            updateSeekBar();
-        }, 1000);
+    private void updateFavoriteIcon() {
+        favoriteButton.setImageResource(isFavorite ?
+                R.drawable.ic_favorite_filled :
+                R.drawable.ic_favorite_outline);
     }
-
 
     private String formatTime(int milliseconds) {
         int minutes = (milliseconds / 1000) / 60;
@@ -247,13 +262,43 @@ public class AudioPlayerActivity extends AppCompatActivity {
         return String.format("%d:%02d", minutes, seconds);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    private void releaseMediaPlayer() {
         if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        handler.removeCallbacksAndMessages(null);
+        playPauseButton.setImageResource(R.drawable.ic_play);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            lastPlaybackPosition = mediaPlayer.getCurrentPosition();
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        releaseMediaPlayer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        releaseMediaPlayer();
     }
 
     public static class Favorite {

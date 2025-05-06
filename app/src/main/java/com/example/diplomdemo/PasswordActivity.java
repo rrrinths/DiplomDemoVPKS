@@ -3,7 +3,9 @@ package com.example.diplomdemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,18 +24,28 @@ public class PasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
 
-        // Инициализация Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        // Найти элементы на экране
+        findViewById(R.id.main).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    View view = PasswordActivity.this.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                }
+                return false;
+            }
+        });
+
         editEmail = findViewById(R.id.editEmail);
         btnResetPassword = findViewById(R.id.btnResetPassword);
         btnBack = findViewById(R.id.nav_home);
 
-        // Обработчик кнопки "Сбросить пароль"
         btnResetPassword.setOnClickListener(view -> resetPassword());
 
-        // Обработчик кнопки "Назад"
         btnBack.setOnClickListener(view -> {
             startActivity(new Intent(PasswordActivity.this, activity_avtorization.class));
             finish();
@@ -48,7 +60,6 @@ public class PasswordActivity extends AppCompatActivity {
             return;
         }
 
-        // Отправка письма для сброса пароля
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

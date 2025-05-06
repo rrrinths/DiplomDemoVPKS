@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/imagebackdiplom">
+
+    <TextView
+        android:id="@+id/titleYoga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Йога"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:fontFamily="@font/jost_light"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/nav_home"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/icons8__30"
+        android:backgroundTint="@color/white" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/yogaRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleYoga"
+        android:layout_marginTop="16dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:clipToPadding="false"
+        android:fontFamily="@font/jost_light"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/yogaRecyclerView"
+        android:layout_above="@id/buttonPanel"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <EditText
+                android:id="@+id/editTextCategoryId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID категории (например, 'yoga')"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <EditText
+                android:id="@+id/editTextId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID практики (например, 'yoga_1')"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <EditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Название практики"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Краткое описание"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextImageUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="URL или имя основного изображения"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Изображения упражнений:"
+                android:textColor="@color/white"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/defaultupr"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:contentDescription="Изображение 1"/>
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/defaultupr"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:contentDescription="Изображение 2"/>
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/defaultupr"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:contentDescription="Изображение 3"/>
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/defaultupr"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:contentDescription="Изображение 4"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/defaultupr"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:contentDescription="Изображение 5"/>
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/defaultupr"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:contentDescription="Изображение 6"/>
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/defaultupr"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:contentDescription="Изображение 7"/>
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/defaultupr"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:contentDescription="Изображение 8"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Упражнения:"
+                android:textColor="@color/white"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/jost_light"/>
+
+            <EditText
+                android:id="@+id/editTextUpr1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Упражнение 1"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextUpr2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Упражнение 2"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextUpr3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Упражнение 3"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextUpr4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Упражнение 4"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextUpr5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Упражнение 5"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextUpr6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Упражнение 6"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextUpr7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Упражнение 7"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                android:id="@+id/editTextUpr8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Упражнение 8"
+                android:background="@drawable/edit_text_bg"
+                android:textColor="@android:color/black"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/jost_light"
+                android:inputType="textMultiLine"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить"
+            android:backgroundTint="#8B6F50"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/jost_light"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Изменить"
+            android:backgroundTint="#8B6F50"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/jost_light"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Удалить"
+            android:backgroundTint="#8B6F50"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/jost_light" />
+    </LinearLayout>
+</RelativeLayout>

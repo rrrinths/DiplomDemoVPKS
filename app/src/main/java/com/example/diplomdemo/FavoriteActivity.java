@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -47,7 +48,6 @@ public class FavoriteActivity extends AppCompatActivity {
         favoriteContainer = findViewById(R.id.favoriteContainer);
 
         loadFavorites();
-        // Настройка нижнего бара
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         if (bottomNavigationView != null) {
             bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -70,14 +70,18 @@ public class FavoriteActivity extends AppCompatActivity {
         String userId = auth.getCurrentUser().getUid();
 
         database.child("Favorites").orderByChild("userId").equalTo(userId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        favoriteContainer.removeAllViews();
+
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot favoriteSnapshot : dataSnapshot.getChildren()) {
                                 String contentId = favoriteSnapshot.child("contentId").getValue(String.class);
                                 if (contentId != null) {
                                     loadAudioSessionDetails(contentId);
+                                    loadYogaDetails(contentId);
+                                    loadMeditationDetails(contentId);
                                 }
                             }
                         } else {
@@ -88,6 +92,52 @@ public class FavoriteActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Toast.makeText(FavoriteActivity.this, "Ошибка загрузки избранного", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    private void loadYogaDetails(String contentId) {
+        database.child("Yoga").orderByChild("id").equalTo(contentId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                String title = snapshot.child("title").getValue(String.class);
+                                String imageUrl = snapshot.child("imageUrl").getValue(String.class);
+
+                                if (title != null && imageUrl != null) {
+                                    addFavoriteItem(title, imageUrl, contentId, "yoga");
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(FavoriteActivity.this, "Ошибка загрузки йоги", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    private void loadMeditationDetails(String contentId) {
+        database.child("meditation").orderByChild("id").equalTo(contentId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                String title = snapshot.child("title").getValue(String.class);
+                                String imageUrl = snapshot.child("imageUrl").getValue(String.class);
+
+                                if (title != null && imageUrl != null) {
+                                    addFavoriteItem(title, imageUrl, contentId, "meditation");
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(FavoriteActivity.this, "Ошибка загрузки медитации", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -103,8 +153,9 @@ public class FavoriteActivity extends AppCompatActivity {
                                 String imageUrl = sessionSnapshot.child("image").getValue(String.class);
 
                                 if (title != null && imageUrl != null) {
-                                    addFavoriteItem(title, imageUrl, contentId);
-                                } else {
+                                    addFavoriteItem(title, imageUrl, contentId, "audio");
+                                }
+                                else {
                                     Log.d("AUDIO_SESSION", "Данные некорректны: " + contentId);
                                 }
                             }
@@ -120,13 +171,20 @@ public class FavoriteActivity extends AppCompatActivity {
                 });
     }
 
-    private void addFavoriteItem(String title, String imageUrl, String contentId) {
+    private void addFavoriteItem(String title, String imageUrl, String contentId, String contentType) {
+        // Создание макета для элемента
         LinearLayout itemLayout = new LinearLayout(this);
         itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         itemLayout.setOrientation(LinearLayout.HORIZONTAL);
         itemLayout.setPadding(20, 20, 20, 20);
+
+        itemLayout.setBackgroundResource(R.drawable.card_background);
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) itemLayout.getLayoutParams();
+        params.setMargins(0, 10, 0, 10);
+        itemLayout.setLayoutParams(params);
 
         ImageView imageView = new ImageView(this);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(120, 120);
@@ -138,7 +196,7 @@ public class FavoriteActivity extends AppCompatActivity {
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        textParams.setMargins(20, 0, 0, 0);
+        textParams.setMargins(0, 0, 0, 0);
         titleView.setLayoutParams(textParams);
         titleView.setText(title);
         titleView.setTextColor(getResources().getColor(android.R.color.white));
@@ -150,8 +208,25 @@ public class FavoriteActivity extends AppCompatActivity {
         itemLayout.addView(titleView);
 
         itemLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AudioPlayerActivity.class);
-            intent.putExtra("CONTENT_ID", contentId);
+            Intent intent;
+            switch (contentType) {
+                case "yoga":
+                    intent = new Intent(this, YogaDetailActivity.class);
+                    intent.putExtra("yogaId", contentId);
+                    break;
+                case "meditation":
+                    intent = new Intent(this, MeditationDetailActivity.class);
+                    intent.putExtra("meditationId", contentId);
+                    break;
+                case "audio":
+                    intent = new Intent(this, AudioPlayerActivity.class);
+                    intent.putExtra("AUDIO_FILE", contentId);
+                    break;
+                default:
+                    intent = new Intent(this, AudioPlayerActivity.class);
+                    intent.putExtra("CONTENT_ID", contentId);
+                    break;
+            }
             startActivity(intent);
         });
 

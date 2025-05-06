@@ -27,7 +27,7 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
 
         categoryContainer = findViewById(R.id.categoryContainer);
-        databaseRef = FirebaseDatabase.getInstance().getReference("Category"); // вместо "categories"
+        databaseRef = FirebaseDatabase.getInstance().getReference("Category");
 
         loadCategories();
 
@@ -125,9 +125,6 @@ public class CategoryActivity extends AppCompatActivity {
     private void openCategory(String categoryId) {
         Intent intent;
         switch (categoryId) {
-            case "beginner":
-                intent = new Intent(this, BeginnerActivity.class);
-                break;
             case "meditation":
                 intent = new Intent(this, MeditationActivity.class);
                 break;

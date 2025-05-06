@@ -35,6 +35,7 @@ public class YogaActivity extends AppCompatActivity {
                     startActivity(new Intent(this, HomeActivity.class));
                     return true;
                 } else if (item.getItemId() == R.id.nav_category) {
+                    startActivity(new Intent(this, CategoryActivity.class));
                     return true;
                 } else if (item.getItemId() == R.id.nav_profile) {
                     startActivity(new Intent(this, AccountActivity.class));

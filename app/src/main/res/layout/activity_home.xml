@@ -1,10 +1,9 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/imagebackdiplom"
     tools:context=".HomeActivity">
 
@@ -12,8 +11,8 @@
         android:id="@+id/text1"
         android:layout_width="371dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/jost_light"
         android:text="@string/text1"
@@ -25,8 +24,9 @@
         android:id="@+id/tvGreeting"
         android:layout_width="372dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/text1"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/jost_light"
         android:padding="16dp"
         android:text="Доброе время суток!"
@@ -37,12 +37,14 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
+        android:layout_below="@id/tvGreeting"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:fontFamily="@font/jost_light"
             android:layout_margin="20dp">
 
             <LinearLayout
@@ -92,6 +94,7 @@
                     android:layout_gravity="center"
                     android:textColor="@color/white"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +118,32 @@
                     android:layout_gravity="center"
                     android:textColor="@color/white"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
 
+                <ImageView
+                    android:layout_width="350dp"
+                    android:layout_height="600dp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/rec1" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="350dp"
+                    android:layout_height="600dp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/rec2" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -123,9 +151,9 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="#85705D"
         app:itemIconTint="@color/bottom_nav_default_color"
         app:itemTextColor="@color/bottom_nav_default_color"
         app:menu="@menu/bottom_navigation"/>
-
-</LinearLayout>
+</RelativeLayout>

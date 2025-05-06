@@ -27,14 +27,15 @@ public class AudioActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Обработчик кликов для аудиофайлов
         LinearLayout audio1 = findViewById(R.id.audio1);
         LinearLayout audio2 = findViewById(R.id.audio2);
-
+        LinearLayout audio3 = findViewById(R.id.audio3);
+        LinearLayout audio4 = findViewById(R.id.audio4);
         audio1.setOnClickListener(v -> openAudioPlayer("barhatnyy_utrenniy_dozhd"));
         audio2.setOnClickListener(v -> openAudioPlayer("okean_myagkoy_koncetracii"));
+        audio3.setOnClickListener(v -> openAudioPlayer("loveandkindness"));
+        audio4.setOnClickListener(v -> openAudioPlayer("osoznannoedikhanie"));
 
-        // Настройка нижнего бара
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         if (bottomNavigationView != null) {
             bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -56,6 +57,30 @@ public class AudioActivity extends AppCompatActivity {
     private void openAudioPlayer(String audioFileName) {
         Intent intent = new Intent(this, AudioPlayerActivity.class);
         intent.putExtra("AUDIO_FILE", audioFileName);
+
+        String title = "";
+        String imageRes = "";
+
+        switch (audioFileName) {
+            case "barhatnyy_utrenniy_dozhd":
+                title = "Бархатный утренний дождь";
+                imageRes = "imageaudio1";
+                break;
+            case "okean_myagkoy_koncetracii":
+                title = "Океан мягкой концентрации";
+                imageRes = "imageaudio2";
+                break;
+            case "loveandkindness":
+                title = "Медитация любящей доброты";
+                imageRes = "imageaudio3";
+                break;
+            case "osoznannoedikhanie":
+                title = "Медитация осознанного дыхания";
+                imageRes = "imageaudio4";
+                break;
+        }
+        intent.putExtra("AUDIO_TITLE", title);
+        intent.putExtra("AUDIO_IMAGE", imageRes);
         startActivity(intent);
     }
 }
